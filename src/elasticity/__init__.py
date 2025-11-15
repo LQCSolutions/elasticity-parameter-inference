@@ -9,8 +9,10 @@ This package provides:
 - Observation operators extracting DIC-style displacement data
 - Bayesian inference utilities (posterior grid + importance sampling)
 """
+from forwardPDESolver import solve_elasticity
 
 __all__ = [
+    "solve_elasticity",
 ]
 
 __version__ = "1.0.0"
