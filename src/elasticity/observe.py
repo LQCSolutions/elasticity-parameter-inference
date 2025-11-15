@@ -76,7 +76,7 @@ def observe(u_sol : Function,
         [u_x(x1,y1), u_y(x1,y1); u_x(x2,y2), u_y(x2,y2); ...].
     """
     N = sensors.shape[0]
-    y = np.zeros(2 * N, dtype=float)
+    y = np.zeros((N,2), dtype=float)
 
     for i, (x_i, y_i) in enumerate(sensors):
         ux, uy = u_sol(Point(float(x_i), float(y_i)))
