@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "elasticity-parameter-inference"
+version = "1.0.0"
+description = "Bayesian inference of material parameters (E, nu) in a 2D elasticity model of a thin plate."
+readme = { file = "README.md", content-type = "text/markdown" }
+license = { file = "LICENSE" }
+authors = [
+    { name="LQC Solutions", email="info@lqcsolutions.com" }
+]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "matplotlib"
+    # Dolfin / FeniCS should be installed separately (conda, docker, ..).
+]
+
+
+[project.urls]
+Homepage = "https://www.lqcsolutions.com/"
+Documentation = "https://github.com/LQCSolutions/elasticity-parameter-inference/"
+Source = "https://github.com/LQCSolutions/elasticity-parameter-inference/"
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+[tool.setuptools.packages.find]
+where = ["src"]
