@@ -41,7 +41,9 @@ def epsilon(u):
 def sigma(u, lam, mu):
     return lam * tr(epsilon(u)) * Identity(2) + 2.0 * mu * epsilon(u)
 
-def solve_elasticity(E, nu, traction=5e6):
+def solve_elasticity(E : float, 
+                     nu : float, 
+                     traction : float=5e6) -> Function:
     """
     Solve 2D linear elasticity on a fixed plate mesh for given (E, nu).
 
@@ -72,7 +74,7 @@ def solve_elasticity(E, nu, traction=5e6):
 
     return u_sol
 
-def demo_forward():
+def demo_forward(sensors=None):
     """
     Run a forward solve for visualization and plot u_x and u_y over the plate.
     """
@@ -85,19 +87,25 @@ def demo_forward():
     u_x, u_y = u_sol.split(deepcopy=True)
 
     plt.figure(figsize=(8,4))
-    p = plot(u_x)  # FEniCS' own plotting helper
+    p = plot(u_x) 
     plt.colorbar(p, label=r"$u_x(x,y)$")
     plt.xlabel(r"$x$")
     plt.ylabel(r"$y$")
     plt.title( fr"$X$-displacement field ($E={E/1e9:.1f}$ GPa, $\nu={nu:.2f}$, $T={traction/1e6:.1f}$ MPa)")
+    if sensors is not None:
+        plt.scatter(sensors[:,0], sensors[:,1], marker='x', facecolors="white", edgecolors="black", label='DIC Sensors')
+        plt.legend()
     plt.tight_layout()
 
     plt.figure(figsize=(8,4))
-    p = plot(u_y)  # FEniCS' own plotting helper
+    p = plot(u_y)
     plt.colorbar(p, label=r"$u_y(x,y)$")
     plt.xlabel(r"$x$")
     plt.ylabel(r"$y$")
     plt.title( fr"$Y$-displacement field ($E={E/1e9:.1f}$ GPa, $\nu={nu:.2f}$, $T={traction/1e6:.1f}$ MPa)")
+    if sensors is not None:
+        plt.scatter(sensors[:,0], sensors[:,1], marker='x', facecolors="white", edgecolors="black", label='DIC Sensors')
+        plt.legend()
     plt.tight_layout()
 
     plt.show()

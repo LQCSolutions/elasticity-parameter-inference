@@ -10,9 +10,12 @@ This package provides:
 - Bayesian inference utilities (posterior grid + importance sampling)
 """
 from forwardPDESolver import solve_elasticity
+from observe import create_sensor_positions, observe
 
 __all__ = [
     "solve_elasticity",
+    "create_sensor_positions",
+    "observe",
 ]
 
 __version__ = "1.0.0"
