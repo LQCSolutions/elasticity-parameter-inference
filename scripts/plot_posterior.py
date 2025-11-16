@@ -2,8 +2,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from elasticity import logPriorDensity, loglikelihood
+from typing import Dict
 
-def plotPosterior():
+def plotPosterior(points : Dict ={}):
     # Load the data from file
     data = np.load('../data/DIC_observations.npz')
     observations = data["observations"]
@@ -37,6 +38,8 @@ def plotPosterior():
     prior_values[is_inf] = np.nan
     posterior_values[is_inf] = np.nan
 
+    colors = {"MAP" : 'red', "true" : 'black'}
+
     # make a 3D plot of the posterior distribution
     fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
@@ -59,6 +62,9 @@ def plotPosterior():
     plt.colorbar(cs, label=r"$p(\nu,\log_{10}E \mid \text{data})$")
     plt.xlabel(r"$\nu$")
     plt.ylabel(r"$\log_{10} E$")
+    for p in points.keys():
+        plt.scatter(points[p][0], points[p][1], label=p, marker='x', color=colors[p])
+    plt.legend()
     plt.show()
 
 if __name__ == '__main__':

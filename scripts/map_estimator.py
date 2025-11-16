@@ -2,6 +2,8 @@ import numpy as np
 
 from elasticity import MAPEstimator
 
+from plot_posterior import plotPosterior
+
 data = np.load('../data/DIC_observations.npz')
 observations = data["observations"]
 sensors = data["sensors"]
@@ -21,3 +23,6 @@ if optimization_result.success:
     print(fr'MAP Estimate Found. $\nu={nu_opt}$ and $\log_{10}(E) = {log10_E_opt}$')
 else:
     print('MAP Estimator did not converge.')
+
+# Plot the map estimate and true paramters on the posterior distrbution 
+plotPosterior({'MAP' : optimization_result.x, "true" : np.array([0.28, 0.0])})

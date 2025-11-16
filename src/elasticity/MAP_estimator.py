@@ -18,7 +18,8 @@ def MAPEstimator(u_x_ref : np.ndarray,
     def callback(intermediate_result: opt.OptimizeResult):
         if verbose:
             print(intermediate_result.x, intermediate_result.fun, np.linalg.norm(intermediate_result.grad))
-    initial_guess = np.array([0.1, 0.5]) # (nu, log10_E)
-    optimization_result = opt.minimize(objective, initial_guess, bounds=bounds, method='trust-constr', callback=callback)
+    #initial_guess = np.array([0.1, 0.5]) # (nu, log10_E)
+    initial_guess = np.array([0.1, 2.0])
+    optimization_result = opt.minimize(objective, initial_guess, bounds=bounds, method='trust-constr', callback=callback, options={"gtol" : 1e-12})
 
     return optimization_result
