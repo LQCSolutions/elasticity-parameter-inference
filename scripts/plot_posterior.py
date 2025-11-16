@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from elasticity import posterior, logPosterior, logPriorDensity, loglikelihood
+from elasticity import logPriorDensity, loglikelihood
 
 def plotPosterior():
     # Load the data from file
@@ -18,7 +18,7 @@ def plotPosterior():
     # Make a grid of (nu, log10E) values
     n_grid_values = 101
     nu_values = np.linspace(-0.5, 0.45, n_grid_values)
-    log10E_values = np.linspace(-1, 1, n_grid_values)
+    log10E_values = np.linspace(-1, 2, n_grid_values)
     grid_nu_values, grid_log10E_values = np.meshgrid(nu_values, log10E_values)
 
     log_prior_values = np.zeros_like(grid_nu_values)
@@ -53,6 +53,12 @@ def plotPosterior():
     ax.set_ylabel(r"$\log10 E$")
     ax.set_zlabel(r"$p(\nu, E)$")
     ax.set_title('Prior Density')
+
+    plt.figure()
+    cs = plt.contourf(grid_nu_values, grid_log10E_values, posterior_values.T, levels=40)
+    plt.colorbar(cs, label=r"$p(\nu,\log_{10}E \mid \text{data})$")
+    plt.xlabel(r"$\nu$")
+    plt.ylabel(r"$\log_{10} E$")
     plt.show()
 
 if __name__ == '__main__':
