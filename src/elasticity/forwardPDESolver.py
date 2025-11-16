@@ -61,7 +61,9 @@ def solve_elasticity(E : float,
     u_sol : Function
         Displacement field in VectorFunctionSpace V.
     """
-    lam_val, mu_val = lame_parameters(E, nu)
+    E_pa = 1e8 * E
+
+    lam_val, mu_val = lame_parameters(E_pa, nu)
     lam = Constant(lam_val)
     mu = Constant(mu_val)
     T = Constant((traction, 0.0))
@@ -78,7 +80,7 @@ def demo_forward(sensors=None):
     """
     Run a forward solve for visualization and plot u_x and u_y over the plate.
     """
-    E = 150e9
+    E = 1.0
     nu = 0.28
     traction = 5e6
     u_sol = solve_elasticity(E, nu, traction=traction)

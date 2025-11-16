@@ -11,11 +11,16 @@ This package provides:
 """
 from .forwardPDESolver import solve_elasticity
 from .observe import create_sensor_positions, observe
+from .distributions import logPriorDensity, loglikelihood, logPosterior, posterior
 
 __all__ = [
     "solve_elasticity",
     "create_sensor_positions",
     "observe",
+    "logPriorDensity",
+    "loglikelihood",
+    "logPosterior",
+    "posterior",
 ]
 
 __version__ = "1.0.0"

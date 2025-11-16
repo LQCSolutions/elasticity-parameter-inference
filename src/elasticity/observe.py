@@ -4,7 +4,7 @@ from dolfin import Point, Function
 from elasticity.forwardPDESolver import Lx, Ly, demo_forward
 
 def create_sensor_positions(nx: int = 10,
-                            ny: int = 5,
+                            ny: int = 3,
                             x_margin: float = 0.1,
                             y_margin: float = 0.03,
                             stagger: bool = True) -> np.ndarray:
