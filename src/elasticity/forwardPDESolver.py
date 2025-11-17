@@ -61,6 +61,8 @@ def solve_elasticity(E : float,
     u_sol : Function
         Displacement field in VectorFunctionSpace V.
     """
+    set_log_level(LogLevel.ERROR)
+
     E_pa = 1e8 * E
 
     lam_val, mu_val = lame_parameters(E_pa, nu)

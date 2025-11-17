@@ -4,9 +4,9 @@ import matplotlib.pyplot as plt
 from elasticity import logPriorDensity, loglikelihood
 from typing import Dict
 
-def plotPosterior(points : Dict ={}):
+def plotPosterior(N_data_points : int, points : Dict = {}):
     # Load the data from file
-    data = np.load('../data/DIC_observations.npz')
+    data = np.load(f'../data/DIC_observations_N={N_data_points}.npz')
     observations = data["observations"]
     sensors = data["sensors"]
     noise_sigma_x = data["noise_sigma_x"]
@@ -68,4 +68,4 @@ def plotPosterior(points : Dict ={}):
     plt.show()
 
 if __name__ == '__main__':
-    plotPosterior()
+    plotPosterior(100)
