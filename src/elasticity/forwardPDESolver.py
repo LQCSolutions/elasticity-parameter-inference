@@ -90,23 +90,23 @@ def demo_forward(sensors=None):
     # Split into components
     u_x, u_y = u_sol.split(deepcopy=True)
 
-    plt.figure(figsize=(8,4))
+    plt.figure(figsize=(8,3))
     p = plot(u_x) 
     plt.colorbar(p, label=r"$u_x(x,y)$")
     plt.xlabel(r"$x$")
     plt.ylabel(r"$y$")
-    plt.title( fr"$X$-displacement field ($E={E/1e9:.1f}$ GPa, $\nu={nu:.2f}$, $T={traction/1e6:.1f}$ MPa)")
+    #plt.title( fr"$X$-displacement field ($E={E/1e9:.1f}$ GPa, $\nu={nu:.2f}$, $T={traction/1e6:.1f}$ MPa)")
     if sensors is not None:
         plt.scatter(sensors[:,0], sensors[:,1], marker='x', facecolors="white", edgecolors="black", label='DIC Sensors')
         plt.legend()
     plt.tight_layout()
 
-    plt.figure(figsize=(8,4))
+    plt.figure(figsize=(8,3))
     p = plot(u_y)
     plt.colorbar(p, label=r"$u_y(x,y)$")
     plt.xlabel(r"$x$")
     plt.ylabel(r"$y$")
-    plt.title( fr"$Y$-displacement field ($E={E/1e9:.1f}$ GPa, $\nu={nu:.2f}$, $T={traction/1e6:.1f}$ MPa)")
+    #plt.title( fr"$Y$-displacement field ($E={E/1e9:.1f}$ GPa, $\nu={nu:.2f}$, $T={traction/1e6:.1f}$ MPa)")
     if sensors is not None:
         plt.scatter(sensors[:,0], sensors[:,1], marker='x', facecolors="white", edgecolors="black", label='DIC Sensors')
         plt.legend()

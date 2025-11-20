@@ -11,7 +11,7 @@ This package provides:
 """
 from .forwardPDESolver import solve_elasticity
 from .observe import create_sensor_positions, observe
-from .distributions import logPriorDensity, loglikelihood, logPosterior, posterior
+from .distributions import logPriorDensity, loglikelihood, logPosterior, posterior, samplePriorDensity
 from .MAP_estimator import MAPEstimator
 
 __all__ = [
@@ -23,6 +23,7 @@ __all__ = [
     "logPosterior",
     "posterior",
     "MAPEstimator",
+    "samplePriorDensity",
 ]
 
 __version__ = "1.0.0"

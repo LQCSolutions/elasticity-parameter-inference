@@ -86,5 +86,5 @@ def observe(u_sol : Function,
     return y
 
 if __name__ == '__main__':
-    sensors = create_sensor_positions()
+    sensors = create_sensor_positions(stagger=False)
     demo_forward(sensors)

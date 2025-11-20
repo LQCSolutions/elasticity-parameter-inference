@@ -8,7 +8,7 @@ mu_log10_E = 0.5
 sigma_log10_E = 0.5
 
 def logPriorDensity(nu : float,
-                   logE : float) -> float:
+                    logE : float) -> float:
     # Uniform in nu on [nu_min, nu_max]
     if not (nu_min <= nu <= nu_max):
         return -np.inf
@@ -17,6 +17,12 @@ def logPriorDensity(nu : float,
     log_log10E_density = -(logE - mu_log10_E)**2 / (2.0 * sigma_log10_E**2)  - np.log( np.sqrt(2.0*np.pi * sigma_log10_E**2) )
     
     return log_nu_density + log_log10E_density
+
+def samplePriorDensity(N : int):
+    rng = np.random.RandomState()
+    nu_samples = rng.uniform(nu_min, nu_max, N)
+    log10E_samples = rng.normal(mu_log10_E, sigma_log10_E, N)
+    return np.concatenate((nu_samples[:,np.newaxis], log10E_samples[:,np.newaxis]), axis=1)
 
 def loglikelihood(nu : float,
                   log10E : float,

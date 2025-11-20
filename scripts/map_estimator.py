@@ -4,7 +4,7 @@ from elasticity import MAPEstimator
 
 from plot_posterior import plotPosterior
 
-N_data_points = 100
+N_data_points = 1000
 data = np.load(f'../data/DIC_observations_N={N_data_points}.npz')
 observations = data["observations"]
 sensors = data["sensors"]
@@ -26,4 +26,4 @@ else:
     print('MAP Estimator did not converge.')
 
 # Plot the map estimate and true paramters on the posterior distrbution 
-plotPosterior(N_data_points, {'MAP' : optimization_result.x, "true" : np.array([0.28, 0.0])})
+plotPosterior(N_data_points, {'MAP' : optimization_result.x, "true" : np.array([0.28, 0.0])}, optimization_result.trajectory)

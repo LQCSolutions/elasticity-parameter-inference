@@ -2,9 +2,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 from elasticity import logPriorDensity, loglikelihood
-from typing import Dict
+from typing import Dict, Optional
 
-def plotPosterior(N_data_points : int, points : Dict = {}):
+def plotPosterior(N_data_points : int, 
+                  points : Dict = {},
+                  trajectory : Optional[np.ndarray] = None):
     # Load the data from file
     data = np.load(f'../data/DIC_observations_N={N_data_points}.npz')
     observations = data["observations"]
@@ -18,7 +20,7 @@ def plotPosterior(N_data_points : int, points : Dict = {}):
 
     # Make a grid of (nu, log10E) values
     n_grid_values = 101
-    nu_values = np.linspace(-0.5, 0.45, n_grid_values)
+    nu_values = np.linspace(-0.2, 0.4, n_grid_values)
     log10E_values = np.linspace(-1, 2, n_grid_values)
     grid_nu_values, grid_log10E_values = np.meshgrid(nu_values, log10E_values)
 
@@ -39,6 +41,7 @@ def plotPosterior(N_data_points : int, points : Dict = {}):
     posterior_values[is_inf] = np.nan
 
     colors = {"MAP" : 'red', "true" : 'black'}
+    labels = {"MAP" : "MAP", "true" : "Ground Truth"}
 
     # make a 3D plot of the posterior distribution
     fig = plt.figure()
@@ -50,12 +53,11 @@ def plotPosterior(N_data_points : int, points : Dict = {}):
     ax.set_title('Posterior Density')
 
     fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_surface(grid_nu_values, grid_log10E_values, prior_values.T, cmap='viridis')
-    ax.set_xlabel(r"$\nu$")
-    ax.set_ylabel(r"$\log10 E$")
-    ax.set_zlabel(r"$p(\nu, E)$")
-    ax.set_title('Prior Density')
+    cs = plt.contourf(grid_nu_values, grid_log10E_values, prior_values.T, levels=40)
+    plt.colorbar(cs, label=r"$p(\nu, \log_{10} E)$")
+    plt.xlabel(r"$\nu$")
+    plt.ylabel(r"$\log_{10} E$")
+    plt.title('Prior Density')
 
     plt.figure()
     cs = plt.contourf(grid_nu_values, grid_log10E_values, posterior_values.T, levels=40)
@@ -63,9 +65,13 @@ def plotPosterior(N_data_points : int, points : Dict = {}):
     plt.xlabel(r"$\nu$")
     plt.ylabel(r"$\log_{10} E$")
     for p in points.keys():
-        plt.scatter(points[p][0], points[p][1], label=p, marker='x', color=colors[p])
-    plt.legend()
+        plt.scatter(points[p][0], points[p][1], label=labels[p], marker='x', color=colors[p])
+    if trajectory is not None:
+        plt.plot(trajectory[:,0], trajectory[:,1], color='red', marker='.')
+    if len(points.keys()) > 0:
+        plt.legend()
     plt.show()
 
 if __name__ == '__main__':
-    plotPosterior(100)
+    points = {"true": np.array([0.28, 0.0])}
+    plotPosterior(10, points)
