@@ -61,15 +61,14 @@ def plotPosterior(N_data_points : int,
 
     plt.figure()
     cs = plt.contourf(grid_nu_values, grid_log10E_values, posterior_values.T, levels=40)
-    plt.colorbar(cs, label=r"$p(\nu,\log_{10}E \mid \text{data})$")
+    #plt.colorbar(cs, label=r"$p(\nu,\log_{10}E \mid \text{data})$")
     plt.xlabel(r"$\nu$")
     plt.ylabel(r"$\log_{10} E$")
     for p in points.keys():
         plt.scatter(points[p][0], points[p][1], label=labels[p], marker='x', color=colors[p])
     if trajectory is not None:
         plt.plot(trajectory[:,0], trajectory[:,1], color='red', marker='.')
-    if len(points.keys()) > 0:
-        plt.legend()
+    plt.legend()
     plt.show()
 
 if __name__ == '__main__':
