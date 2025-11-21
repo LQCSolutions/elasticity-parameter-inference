@@ -3,7 +3,7 @@ import numpy as np
 from elasticity import solve_elasticity, observe
 
 nu_min = -0.2
-nu_max = 0.4
+nu_max = 0.5
 mu_log10_E = 0.5
 sigma_log10_E = 0.5
 

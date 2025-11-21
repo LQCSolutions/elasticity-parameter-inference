@@ -4,7 +4,7 @@ from elasticity import MAPEstimator
 
 from plot_posterior import plotPosterior
 
-N_data_points = 1000
+N_data_points = 10000
 data = np.load(f'../data/DIC_observations_N={N_data_points}.npz')
 observations = data["observations"]
 sensors = data["sensors"]
@@ -21,7 +21,7 @@ optimization_result = MAPEstimator(u_x_ref, u_y_ref, sensors, noise_sigma_x, noi
 if optimization_result.success:
     nu_opt = optimization_result.x[0]
     log10_E_opt = optimization_result.x[1]
-    print(fr'MAP Estimate Found. $\nu={nu_opt}$ and $\log_{10}(E) = {log10_E_opt}$')
+    print(fr'MAP Estimate Found after N={optimization_result.iters} steps. $\nu={nu_opt}$ and $\log_{10}(E) = {log10_E_opt}$')
 else:
     print('MAP Estimator did not converge.')
 

@@ -76,9 +76,13 @@ class GradientDescentOptimizer:
                 return OptimizeResult(True, p, objective(p), g, t, np.array(trajectory))
             print(p, np.linalg.norm(g))
 
-            p = p - self.lr * g
+            p_new = p - self.lr * g
             if bounds is not None:
-                p = np.clip(p, bounds[:,0], bounds[:,1])
+                not_out_of_bounds = (bounds[0,0] <= p_new[0] <= bounds[0,1]) and (bounds[1,0] <= p_new[1] <= bounds[1,1])
+                if not not_out_of_bounds:
+                    return OptimizeResult(False, p, objective(p), g, t, np.array(trajectory))
+            
+            p = p_new
             trajectory.append(p)
 
         g = grad_objective(p)
@@ -102,10 +106,10 @@ def MAPEstimator(u_x_ref : np.ndarray,
     grad_objective = lambda p: np.array([objective(p + e1 * h) - objective(p - e1 * h), objective(p + e2 * h) - objective(p - e2 * h)]) / (2.0 * h)
 
     # Run the Adam optimizer
-    lr = 1.e-4
-    #adam = AdamOptimizer(lr=lr)
+    lr = 3e-4
     adam = GradientDescentOptimizer(lr=lr)
-    initial_guess = np.array([0.1, 0.5]) # (nu, log10_E)
-    bounds = np.array([[-0.2, 0.4], [-3.0, 4.0]])
+    #initial_guess = np.array([0.1, 0.5]) # (nu, log10_E)
+    initial_guess = np.array([0.0, 1.0])
+    bounds = np.array([[-0.2, 0.5], [-3.0, 4.0]])
     result = adam.optimize(objective, grad_objective, initial_guess, tol, bounds)
     return result
