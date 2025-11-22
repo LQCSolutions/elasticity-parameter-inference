@@ -43,16 +43,6 @@ def plotPosterior(N_data_points : int,
     colors = {"MAP" : 'red', "true" : 'black'}
     labels = {"MAP" : "MAP", "true" : "Ground Truth"}
 
-    # make a 3D plot of the posterior distribution
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    ax.plot_surface(grid_nu_values, grid_log10E_values, posterior_values.T, cmap='viridis')
-    ax.set_xlabel(r"$\nu$")
-    ax.set_ylabel(r"$\log10 E$")
-    ax.set_zlabel(r"$p(\nu, E | data)$")
-    ax.set_title('Posterior Density')
-
-    fig = plt.figure()
     cs = plt.contourf(grid_nu_values, grid_log10E_values, prior_values.T, levels=40)
     plt.colorbar(cs, label=r"$p(\nu, \log_{10} E)$")
     plt.xlabel(r"$\nu$")
@@ -61,7 +51,7 @@ def plotPosterior(N_data_points : int,
 
     plt.figure()
     cs = plt.contourf(grid_nu_values, grid_log10E_values, posterior_values.T, levels=40)
-    #plt.colorbar(cs, label=r"$p(\nu,\log_{10}E \mid \text{data})$")
+    plt.colorbar(cs, label=r"$p(\nu,\log_{10}E \mid \text{data})$")
     plt.xlabel(r"$\nu$")
     plt.ylabel(r"$\log_{10} E$")
     for p in points.keys():
